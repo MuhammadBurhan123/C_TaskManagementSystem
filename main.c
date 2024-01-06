@@ -8,10 +8,9 @@ struct Task {
     char title[MAX_STRING];
     char description[MAX_STRING];
     int priority;
-    int status; // 1 for completed, 0 for incomplete
+    int status;
 };
 
-// Function to load tasks from "tasks.txt" file
 void loadTasks(struct Task tasks[]) {
     FILE* file = fopen("tasks.txt", "r");
     if (file != NULL) {
@@ -25,7 +24,6 @@ void loadTasks(struct Task tasks[]) {
     }
 }
 
-// Function to input task details from the user
 void inputTaskData(struct Task* task) {
     printf("Enter task title: ");
     scanf("%s", task->title);
@@ -39,7 +37,6 @@ void inputTaskData(struct Task* task) {
     printf("Enter task status (1 for completed, 0 for incomplete): ");
     scanf("%d", &task->status);
 
-    // Save information to "tasks.txt" file
     FILE* file = fopen("tasks.txt", "a");
     if (file != NULL) {
         fprintf(file, "%s %s %d %d\n", task->title, task->description, task->priority, task->status);
@@ -50,7 +47,6 @@ void inputTaskData(struct Task* task) {
     }
 }
 
-// Function to update task status
 void updateTaskStatus(struct Task* task) {
     int newStatus;
     printf("Enter new task status (1 for completed, 0 for incomplete): ");
@@ -60,7 +56,6 @@ void updateTaskStatus(struct Task* task) {
     printf("Task status updated successfully.\n");
 }
 
-// Recursive function to adjust task priority
 void adjustPriority(struct Task* task) {
     if (task->priority > 0) {
         task->priority--;
@@ -68,7 +63,6 @@ void adjustPriority(struct Task* task) {
     }
 }
 
-// Function to display task information
 void displayTaskInfo(struct Task tasks[]) {
     for (int i = 0; i < MAX_TASKS; ++i) {
         printf("Task %d:\n", i + 1);
@@ -82,21 +76,16 @@ void displayTaskInfo(struct Task tasks[]) {
 int main() {
     struct Task tasks[MAX_TASKS];
 
-    // Load tasks from file
     loadTasks(tasks);
 
-    // Input task data from the user
     for (int i = 0; i < MAX_TASKS; ++i) {
         inputTaskData(&tasks[i]);
     }
 
-    // Update task status
     updateTaskStatus(&tasks[0]);
 
-    // Adjust task priority recursively
     adjustPriority(&tasks[0]);
 
-    // Display task information
     displayTaskInfo(tasks);
 
     return 0;
